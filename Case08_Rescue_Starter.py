@@ -50,10 +50,8 @@ def decode_mirror(message):
     """Decode uppercase letters by reflecting A<->Z, B<->Y, etc."""
     decoded = ""
     for char in message:
-        if "A" <= char <= "Z":
-            # MISSION 1: Find the reflected letter using ord() and chr().
-            # Add the decoded letter to the string.
-            pass
+        if "A" <= char <= "Z": 
+            decoded += chr(ord("A") + ord("Z") - ord(char))                    
         else:
             decoded += char
     return decoded
@@ -115,11 +113,16 @@ def run_checks():
 def run_rescue():
     """MISSION 6: call each function in order and print evidence!"""
     print("=== CASE 08: THE SILENT BEACON ===")
-    # TODO: run_checks()
-    # TODO: decoded = decode_mirror(CODED_NOTE)
-    # TODO: extract the relay word found in RELAYS (do not hard-code NORTH).
-    # TODO: if the note does not specify exactly one valid relay, print
-    #       INCONCLUSIVE and stop.
+    run_checks()
+    decoded = decode_mirror(CODED_NOTE)
+    print("Decoded:", decoded)
+    found = [word for word in decoded.split() if word in RELAYS]
+    if len(found) != 1:
+        print("FINAL STATUS: INCONCLUSIVE (note does not name exactly one relay)")
+        return
+    relay = found[0]
+    print("Relay:", relay)
+   
     # TODO: sightings = sites_from_relay(SIGNAL_EVENTS, relay, VALID_WINDOW)
     # TODO: eligible = certified_sites(SITES)
     # TODO: candidates = locate_pod(sightings, eligible,

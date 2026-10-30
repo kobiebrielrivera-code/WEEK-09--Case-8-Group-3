@@ -79,7 +79,7 @@ def certified_sites(sites):
 def locate_pod(sightings, eligible, signatures, false_alerts):
     """Intersection of positive evidence MINUS definitively cleared sites."""
     # MISSION 4: Use sets, & (intersection) and - (difference).
-       return (sightings & eligible & signatures) - false_alerts
+    return (sightings & eligible & signatures) - false_alerts
 
 
 def explain_sites(sites, sightings, eligible, signatures, false_alerts):

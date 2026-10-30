@@ -87,9 +87,16 @@ def explain_sites(sites, sightings, eligible, signatures, false_alerts):
     findings = {}
     for code in sites:
         reasons = []
-        # MISSION 5: append a reason for EACH failed condition.
-        # Not in sightings? Not certified? No pod-signature match?
-        # Independently cleared as false alert?
+      
+        if code not in sightings:
+            reasons.append("Not in sightings")
+        if code not in eligible:
+            reasons.append("Not certified")
+        if code not in signatures:
+            reasons.append("No pod-signature match")
+        if code in false_alerts:
+            reasons.append("Independently cleared as false alert")
+        
         # If no failures, use: 'RETAINED: all verification rules satisfied'.
         findings[code] = "; ".join(reasons) if reasons else "RETAINED: all verification rules satisfied"
     return findings

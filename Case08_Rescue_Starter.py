@@ -59,12 +59,12 @@ def decode_mirror(message):
 
 def sites_from_relay(events, relay, time_window):
     """Return SET of sites whose relay handshake is within window."""
-    sightings = []  # MISSION 2: append qualifying site codes to this LIST.
-    start, end = time_window  # unpack the window TUPLE.
-    for timestamp, site_code, receiver in events:  # unpack event TUPLES.
-        # MISSION 2: filter by matching relay AND inclusive time bounds.
-        pass
-    return set(sightings)  # collapse duplicate transmissions.
+    sightings = []
+    start, end = time_window
+    for timestamp, site_code, receiver in events:
+        if receiver == relay and start <= timestamp <= end:
+            sightings.append(site_code)
+    return set(sightings)
 
 
 def certified_sites(sites):
@@ -129,17 +129,31 @@ def run_rescue():
         return
     relay = found[0]
     print("Relay:", relay)
-   
-    # TODO: sightings = sites_from_relay(SIGNAL_EVENTS, relay, VALID_WINDOW)
-    # TODO: eligible = certified_sites(SITES)
-    # TODO: candidates = locate_pod(sightings, eligible,
-    #                              POD_SIGNATURE_MATCHES, VERIFIED_FALSE_ALERTS)
-    # TODO: findings = explain_sites(SITES, sightings, eligible,
-    #                               POD_SIGNATURE_MATCHES, VERIFIED_FALSE_ALERTS)
-    # TODO: print decoded text, intermediate SETS, each site's explanation.
-    # TODO: if len(candidates) == 1, print the final site and sector from SITES.
-    # TODO: otherwise print INCONCLUSIVE (zero or multiple candidates).
-    print("TODO: Your rescue program has not been assembled yet.")
+
+    sightings = sites_from_relay(SIGNAL_EVENTS, relay, VALID_WINDOW)
+    eligible = certified_sites(SITES)
+    candidates = locate_pod(sightings, eligible,
+                            POD_SIGNATURE_MATCHES, VERIFIED_FALSE_ALERTS)
+    findings = explain_sites(SITES, sightings, eligible,
+                             POD_SIGNATURE_MATCHES, VERIFIED_FALSE_ALERTS)
+
+    print("Decoded text:", decoded)
+    print("Sightings (relay + window):", sorted(sightings))
+    print("Certified sites:", sorted(eligible))
+    print("Pod signature matches:", sorted(POD_SIGNATURE_MATCHES))
+    print("Verified false alerts:", sorted(VERIFIED_FALSE_ALERTS))
+    print("Remaining candidates:", sorted(candidates))
+
+    print("\n--- Site explanations ---")
+    for code, reason in findings.items():
+        print(f"{SITES[code]['label']}: {reason}")
+
+    print()
+    if len(candidates) == 1:
+        final = next(iter(candidates))
+        print("FINAL STATUS:", SITES[final]["label"], "-", SITES[final]["sector"])
+    else:
+        print("FINAL STATUS: INCONCLUSIVE (zero or multiple candidates)")
 
 
 if __name__ == "__main__":

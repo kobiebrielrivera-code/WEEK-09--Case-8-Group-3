@@ -1,0 +1,19 @@
+CASE 08: THE SILENT BEACON
+APPDAET / GROUP RESCUE DISPATCH REPORT
+
+Group: Group 3 / BTIS1
+Members: Aivan Aguilar, Isabelle Bernal, Janis Cabrera, Dannielyn Obille, Kobie Rivera
+Decoded relay: NORTH
+Recovery destination: Hill Clinic
+
+SITE EVIDENCE:
+Hill Clinic: Retained by every required condition
+Civic Stadium: No trusted relay confirmation in the valid time window
+Market Roof: Not a certified landing pad
+River School: No matching cargo-pod sensor signature
+Port Warehouse: Independently verified false alert
+
+FINAL DEFENSE:
+The decoded note is "USE NORTH RELAY" so only NORTH relay handshakes between 18:39 and 18:42 are of any use. That gives the set {Hill Clinic, Market Roof, Port Warehouse, River School} after duplicates are removed. Intersecting that with the certified sites and the pod signature matches leaves {Hill Clinic, Port Warehouse} (Market Roof isn't a certified site, River School has no signature match and Civic Stadium has no valid in-window NORTH sighting). Port Warehouse is then knocked out as it was known from independent camera coverage that a service heater triggered its sensor. Only Hill Clinic survives every rule, therefore, the rescue team should be sent there.
+
+PROGRAM EVIDENCE: attach your completed Python source and its executed outputs.
